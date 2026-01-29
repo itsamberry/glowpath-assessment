@@ -1,4 +1,3 @@
-import React from 'react';
 import { Check, Clock, FileText, Users, Crown, Zap, MessageCircle, Target } from 'lucide-react';
 
 export default function GlowPathPricing() {
