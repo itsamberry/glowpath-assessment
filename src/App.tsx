@@ -5,9 +5,11 @@ import DataInput from './components/DataInput';
 import Charts from './components/Charts';
 import ReportDisplay from './components/ReportDisplay';
 import ExportControls from './components/ExportControls';
+import PricingPage from './components/PricingPage';
 import './App.css';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<'assessment' | 'pricing'>('assessment');
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [chartRefs, setChartRefs] = useState<Array<{ name: string; ref: React.RefObject<any> }>>([]);
 
@@ -36,6 +38,11 @@ function App() {
     }
   };
 
+  // 如果是价格页面，直接渲染
+  if (currentPage === 'pricing') {
+    return <PricingPage />;
+  }
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#F9FAFB' }}>
       {/* 头部 */}
@@ -54,14 +61,30 @@ function App() {
         <p style={{ margin: 0, fontSize: '16px', opacity: 0.9 }}>
           RIASEC + Big Five + 价值观 综合测评系统
         </p>
-        {!result && (
+        <div style={{ marginTop: '15px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          {!result && (
+            <button
+              onClick={loadDemoData}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: 'white',
+                color: '#0EA5E9',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+              }}
+            >
+              加载示例数据
+            </button>
+          )}
           <button
-            onClick={loadDemoData}
+            onClick={() => setCurrentPage('pricing')}
             style={{
-              marginTop: '15px',
               padding: '10px 20px',
-              backgroundColor: 'white',
-              color: '#0EA5E9',
+              backgroundColor: '#F97316',
+              color: 'white',
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
@@ -69,9 +92,9 @@ function App() {
               fontWeight: 'bold',
             }}
           >
-            加载示例数据
+            查看产品方案
           </button>
-        )}
+        </div>
       </header>
 
       {/* 主内容 */}
